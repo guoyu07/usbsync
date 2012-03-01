@@ -1,3 +1,3 @@
 desc : auto sync files from specail folder on pc into mobile devices, such like kindle dx, moto defy, etc..
 this is a qt project working on windows
-the principle is simple, search the specify volumn label every second, use xcoypy to do the real sync job
+the principle is simple, search the specify volumn label every second, use xcopy to do the real sync job
