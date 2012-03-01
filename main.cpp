@@ -5,25 +5,22 @@
 
 int g_syncTimerId = -1;
 
-class SyncApplication : public QApplication
+class SyncApplication : public QCoreApplication
 {
 public:
-	SyncApplication(int argc, char **argv) : QApplication(argc, argv) { ; }
+	SyncApplication(int argc, char **argv) : QCoreApplication(argc, argv) { ; }
+
 	virtual void timerEvent(QTimerEvent *e)
 	{
 		if (e->timerId() != g_syncTimerId) return ;
-		QDir dir("e:\\sync\\kindle\\sync");
-		if (!dir.exists() || 2 >= dir.count()) return ;
-		char c = getKindleDriverLetter();
-		if (!c) return ;
-		QString cmd;
-		cmd = QString("cmd /c xcopy e:\\sync\\kindle\\sync %1:\\DK_Documents\\sync /Y")
-			.arg(QChar(c));
-		::system(cmd.toStdString().c_str());
-		cmd = "cmd /c xcopy e:\\sync\\kindle\\sync e:\\sync\\kindle\\backup /Y /I";
-		::system(cmd.toStdString().c_str());
-		cmd = "cmd /c del e:\\sync\\kindle\\sync\\*.* /Q /S";
-		::system(cmd.toStdString().c_str());
+		doSync("kindle",
+			"e:\\sync\\kindle\\sync",
+			"e:\\sync\\kindle\\backup",
+			"%1:\\DK_Documents\\sync");
+		doSync("defy",
+			"e:\\sync\\defy\\sync",
+			"e:\\sync\\defy\\backup",
+			"%1:\\sync");
 	}
 private:
 };

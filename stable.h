@@ -3,4 +3,9 @@
 #include "string.h"
 #include "windows.h"
 #include <QtCore>
-#include <QtGui>
+
+#if defined(DEBUG) || defined(_DEBUG)
+#define X_ASSERT(x) assert(x)
+#else
+#define X_ASSERT(X)
+#endif
